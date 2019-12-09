@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>我是移动端</title>
+    <script src="./js/vue.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <link rel="stylesheet" href="./css/el/index.css">
+    <script src="./js/el/index.js"></script>
+    <script type='text/javascript' src='./js/axios/index.js'></script>
+    <script type='text/javascript' src='./api/ajax.js'></script>
+    <script src="./api/EmpAPI.js"></script>
+    <style>
+        .expandRow {
+            margin: 1px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <el-table :data="emps" stripe>
+        <el-table-column type="expand">
+            <template slot-scope="props">
+                <el-form label-position="left">
+                    <el-form-item label="编号:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.empno}}</span>
+                    </el-form-item>
+                    <el-form-item label="姓名:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.ename}}</span>
+                    </el-form-item>
+                    <el-form-item label="岗位:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.job}}</span>
+                    </el-form-item>
+                    <el-form-item label="领导编号:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.mgr}}</span>
+                    </el-form-item>
+                    <el-form-item label="入职日期:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.hiredate}}</span>
+                    </el-form-item>
+                    <el-form-item label="薪资:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.sal}}</span>
+                    </el-form-item>
+                    <el-form-item label="业绩:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.comm}}</span>
+                    </el-form-item>
+                    <el-form-item label="部门编号:" :label-width="labelWidth" class="expandRow">
+                        <span>{{props.row.deptno}}</span>
+                    </el-form-item>
+                </el-form>
+            </template>
+        </el-table-column>
+        <el-table-column prop="empno" label="编号" width="80" align="center"></el-table-column>
+        <el-table-column prop="ename" label="姓名"></el-table-column>
+        <el-table-column prop="job" label="岗位" column-key="job"></el-table-column>
+        <el-table-column prop="deptno" label="部门编号" width="80"></el-table-column>
+    </el-table>
+</div>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            labelWidth: '100px',
+            emps: [],
+            emp: {},
+            currentPage: 1,
+            pageSize: 10,
+            sortInfo: 'empno'
+        },
+        mounted() {
+            this.getEmps()
+
+        },
+        methods: {
+            // 远程加载数据
+            async getEmps() {
+                let url = 'getEmpsBypage'
+                let {emp, currentPage, pageSize, sortInfo} = this
+                // 组装分页与排序
+                emp.currentPage = currentPage
+                emp.pageSize = pageSize
+                emp.sortInfo = sortInfo
+                let empPageInfo = await getEmpsBypage(url, emp, 'POST')
+                this.emps = empPageInfo.list
+                this.total = empPageInfo.total
+            },
+        }
+    })
+</script>
+
+</body>
+</html>

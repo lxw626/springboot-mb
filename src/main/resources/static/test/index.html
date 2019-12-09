@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="b.js"></script>
+    <script src="a.js"></script>
+    <script>
+        console.log(a);
+        console.log(b);
+    </script>
+</head>
+<body>
+<button onclick="atb()">a.js调用b.js</button><br>
+<button onclick="bta()">b.js调用a.js</button><br>
+<button onclick="hello()">hello</button><br>
+<button onclick="a.hello()">a.hello</button><br>
+<button onclick="b.hello()">b.hello</button><br>
+<p>
+    两个js的相互调用,两个js在同一个html里面引入后.就可以在一个js里面调用另一个js里面的方法,
+    这两个js的引入不分先后,当两个js中有同名的方法时,后引入的会覆盖先引入的
+</p>
+
+</body>
+</html>

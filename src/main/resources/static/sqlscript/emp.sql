@@ -1,0 +1,15 @@
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (1, '张无忌', '董事长', NULL, '1981-11-17 00:00:00', 100000.00, NULL, 40);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (2, '紫衫龙王', '经理', 1, '1981-06-09 00:00:00', 50000.00, NULL, 30);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (3, '白眉鹰王', '经理', 1, '1981-04-02 00:00:00', 50000.00, NULL, 30);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (4, '金毛狮王', '经理', 1, '1981-05-01 00:00:00', 50000.00, NULL, 30);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (5, '青翼蝙王', '经理', 1, '1980-12-17 00:00:00', 50000.00, NULL, 30);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (6, '彭和尚', '程序员', 4, '1981-02-20 00:00:00', 5000.00, 20000.00, 10);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (7, '张中', '程序员', 4, '1981-02-22 00:00:00', 5000.00, 10000.00, 10);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (8, '说不得', '程序员', 4, '1981-09-28 00:00:00', 5000.00, 15000.00, 10);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (9, '冷谦', '程序员', 4, '1981-09-08 00:00:00', 5000.00, 10000.00, 10);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (10, '周巅', '程序员', 4, '1981-12-03 00:00:00', 5000.00, 30000.00, 10);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (11, '殷野王', '测试', 3, '1987-04-19 00:00:00', 30000.00, NULL, 20);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (12, '殷素素', '测试', 3, '1981-12-03 00:00:00', 30000.00, NULL, 20);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (13, '小昭', '测试', 2, '1982-01-23 00:00:00', 30000.00, NULL, 20);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (14, '张三', '测试', 11, '1987-05-23 00:00:00', 5000.00, NULL, 20);
+INSERT INTO `emp`(`empno`, `ename`, `job`, `mgr`, `hiredate`, `sal`, `comm`, `deptno`) VALUES (15, '李四', '测试', 12, '1980-12-17 00:00:00', 5000.00, NULL, 20);
