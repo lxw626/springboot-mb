@@ -11,7 +11,6 @@
     <script src="./js/el/index.js"></script>
     <script type='text/javascript' src='./js/axios/index.js'></script>
     <script type='text/javascript' src='./api/ajax.js'></script>
-    <script src="./api/EmpAPI.js"></script>
     <style>
         .expandRow {
             margin: 1px;
@@ -81,7 +80,7 @@
                 emp.currentPage = currentPage
                 emp.pageSize = pageSize
                 emp.sortInfo = sortInfo
-                let empPageInfo = await getEmpsBypage(url, emp, 'POST')
+                let empPageInfo = await ajax(url, emp, 'POST')
                 this.emps = empPageInfo.list
                 this.total = empPageInfo.total
             },

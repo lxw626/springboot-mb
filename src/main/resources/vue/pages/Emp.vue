@@ -1,49 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>我是电脑端</title>
-    <script src="./js/vue.js"></script>
-    <script src="./js/vue-router.js"></script>
-    <!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
-    <link rel="stylesheet" href="./css/el/index.css">
-    <script src="./js/el/index.js"></script>
-    <script type='text/javascript' src='./js/axios/index.js'></script>
-    <script type='text/javascript' src='./api/ajax.js'></script>
-
-</head>
-<style>
-    /*找到html标签、body标签，和挂载的标签 都给他们统一设置样式*/
-    html, body, #app, .el-container {
-        /*设置内部填充为0，几个布局元素之间没有间距*/
-        padding: 0px;
-        /*外部间距也是如此设置*/
-        margin: 0px;
-        /*统一设置高度为100%*/
-        height: 100%;
-    }
-    /*添加按钮靠右显示*/
-    .rightAlign {
-        text-align: right;
-    }
-</style>
-<body>
-<div id="app">
-    <el-container style=" border: 1px solid #eee">
-        <el-aside width="200px" style="background-color: rgb(238, 241, 246)" direction="vertical">
-            <el-menu router>
-                <el-menu-item index="/emp">员工管理</el-menu-item>
-                <el-menu-item index="/dept">部门管理</el-menu-item>
-            </el-menu>
-        </el-aside>
-        <el-main style="padding: 0px">
-            <router-view></router-view>
-        </el-main>
-    </el-container>
-
-</div>
-<!--定义模板-->
-<template id="emp">
+<template>
     <div>
         <div style="margin-top: 25px;margin-bottom: 0px">
             <el-form inline :model="emp" size="mini">
@@ -199,24 +154,9 @@
         </el-dialog>
     </div>
 </template>
-<template id="dept">
-    <div>
-        <el-table :data="depts">
-            <el-table-column prop="deptno" label="部门编号" width="100" align="center"></el-table-column>
-            <el-table-column prop="dname" label="部门名称" ></el-table-column>
-            <el-table-column prop="loc" label="所在地"></el-table-column>
-        </el-table>
-        <el-pagination
-            @size-change="handleSizeChange" @current-change="handleCurrentChange"
-            layout="total, sizes, prev, pager, next, jumper" :current-page="currentPage"
-            :page-sizes="[3,5, 10, 15]" :page-size="3" :total="total">
-        </el-pagination>
-    </div>
-</template>
 
 <script>
-    let emp = {
-        template: '#emp',
+    export default {
         mounted() {
             this.getEmps()
             this.getStatistics()
@@ -224,13 +164,13 @@
         data: function () {
             return {
                 showForm: false,
-                remoteSort:false,
-                showNote:false,
-                saveType:0,
+                remoteSort: false,
+                showNote: false,
+                saveType: 0,
                 formLabelWidth: '100px',
                 emps: [],
-                jobs:[],
-                deptnos:[],
+                jobs: [],
+                deptnos: [],
                 total: 0,
                 emp: { // 新增(新增前需要清空emp),编辑(需要将当前行赋值给emp),查询(与查询条件双向绑定)共用
                     empno: undefined,
@@ -242,26 +182,26 @@
                     comm: undefined,
                     deptno: undefined,
                 },
-                sorts:[],
-                sortInfo:'', // sortInfo,currentPage,pageSize放在emp里面容易在赋值的过程中覆盖掉导致后端空指针,所以在发送请求前组装进去
+                sorts: [],
+                sortInfo: '', // sortInfo,currentPage,pageSize放在emp里面容易在赋值的过程中覆盖掉导致后端空指针,所以在发送请求前组装进去
                 currentPage: 1,
                 pageSize: 3,
-                rules:{
-                    ename:[
-                        {required:true,message:'请输入员工姓名',trigger:'blur'},
-                        {min:2,max:5,message: '长度在 2 到 5 个字符', trigger: 'blur'}
+                rules: {
+                    ename: [
+                        {required: true, message: '请输入员工姓名', trigger: 'blur'},
+                        {min: 2, max: 5, message: '长度在 2 到 5 个字符', trigger: 'blur'}
                     ],
-                    mgr:[
-                        {type:'number',message:'mgr必须为数字',trigger:'change'}
+                    mgr: [
+                        {type: 'number', message: 'mgr必须为数字', trigger: 'change'}
                     ],
-                    sal:[
-                        {type:'number',message:'sal必须为数字',trigger:'change'}
+                    sal: [
+                        {type: 'number', message: 'sal必须为数字', trigger: 'change'}
                     ],
-                    comm:[
-                        {type:'number',message:'comm必须为数字',trigger:'change'}
+                    comm: [
+                        {type: 'number', message: 'comm必须为数字', trigger: 'change'}
                     ],
-                    deptno:[
-                        {type:'number',message:'deptno必须为数字',trigger:'change'}
+                    deptno: [
+                        {type: 'number', message: 'deptno必须为数字', trigger: 'change'}
                     ],
 
                 }
@@ -282,19 +222,19 @@
                 this.multipleSelection = val;
             },
             // 前端过滤条件改变后可以考虑在这里重新加载后台的数据
-            filterChange(filter){
+            filterChange(filter) {
             },
             // 远程排序
-            sortChange( column){
-                if(this.remoteSort){
-                    let order = column.order == 'ascending'?'ASC':'DESC'
+            sortChange(column) {
+                if (this.remoteSort) {
+                    let order = column.order == 'ascending' ? 'ASC' : 'DESC'
                     let prop = column.prop
-                    this.sorts.push({prop,order})
+                    this.sorts.push({prop, order})
                     let sorts = this.sorts;
                     let result = []
                     let tmp = []
-                    for(let i=sorts.length-1;i>=0;i--){
-                        if(tmp.indexOf(sorts[i].prop)==-1){
+                    for (let i = sorts.length - 1; i >= 0; i--) {
+                        if (tmp.indexOf(sorts[i].prop) == -1) {
                             tmp.push(sorts[i].prop)
                             result.push(sorts[i])
                         }
@@ -302,63 +242,63 @@
                     tmp = []
                     this.sorts = result
                     let sortInfo = ''
-                    for(let i=result.length-1;i>=0;i--){
-                        sortInfo+=result[i].prop + ' ' + result[i].order + ','
+                    for (let i = result.length - 1; i >= 0; i--) {
+                        sortInfo += result[i].prop + ' ' + result[i].order + ','
                     }
-                    if(sortInfo.endsWith(',')){
-                        sortInfo = sortInfo.substr(0,sortInfo.length-1)
+                    if (sortInfo.endsWith(',')) {
+                        sortInfo = sortInfo.substr(0, sortInfo.length - 1)
                     }
                     this.sortInfo = sortInfo;
                     this.getEmps()
                 }
             },
-            rowDblclick(row, column, event){
-                this.openEmpForm(2,null,row)
+            rowDblclick(row, column, event) {
+                this.openEmpForm(2, null, row)
             },
             // 打开新增,编辑对话框
-            openEmpForm(saveType,index, row,) {
+            openEmpForm(saveType, index, row,) {
                 this.showForm = true
-                this.saveType=saveType
-                if(saveType==1){
+                this.saveType = saveType
+                if (saveType == 1) {
                     this.emptyEmp()
-                } else if(saveType==2){
+                } else if (saveType == 2) {
                     this.emp = row
                 }
             },
             // 清空emp
-            emptyEmp(){
-                this.emp.empno= undefined
-                this.emp.ename= ''
-                this.emp.job= ''
-                this.emp.mgr= undefined
-                this.emp.hiredate= undefined
-                this.emp.sal= undefined
-                this.emp.comm= undefined
-                this.emp.deptno= undefined
+            emptyEmp() {
+                this.emp.empno = undefined
+                this.emp.ename = ''
+                this.emp.job = ''
+                this.emp.mgr = undefined
+                this.emp.hiredate = undefined
+                this.emp.sal = undefined
+                this.emp.comm = undefined
+                this.emp.deptno = undefined
             },
             // 远程加载数据
             async getEmps() {
                 let url = 'getEmpsBypage'
-                let {emp,currentPage,pageSize,sortInfo} = this
+                let {emp, currentPage, pageSize, sortInfo} = this
                 // 组装分页与排序
-                emp.currentPage=currentPage
-                emp.pageSize=pageSize
-                emp.sortInfo=sortInfo
-                let empPageInfo = await ajax(url,emp,'POST')
+                emp.currentPage = currentPage
+                emp.pageSize = pageSize
+                emp.sortInfo = sortInfo
+                let empPageInfo = await ajax(url, emp, 'POST')
                 this.emps = empPageInfo.list
                 this.total = empPageInfo.total
             },
             // 远程加载jobs和deptnos
-            async getStatistics(){
+            async getStatistics() {
                 let url = 'getStatistics'
                 let statistics = await ajax(url)
-                let jobs = statistics.jobs.map(e=>({
-                   text:e,
-                   value:e
+                let jobs = statistics.jobs.map(e => ({
+                    text: e,
+                    value: e
                 }))
-                let deptnos = statistics.deptnos.map(e=>({
-                   text:e,
-                   value:e
+                let deptnos = statistics.deptnos.map(e => ({
+                    text: e,
+                    value: e
                 }))
                 this.jobs = jobs
                 this.deptnos = deptnos
@@ -368,12 +308,12 @@
                 this.showForm = false
                 let url = 'emp'
                 let type = ''
-                if(this.saveType==1){
+                if (this.saveType == 1) {
                     type = 'POST'
-                }else if(this.saveType==2){
+                } else if (this.saveType == 2) {
                     type = 'PUT'
                 }
-                let result = await ajax(url,this.emp,type)
+                let result = await ajax(url, this.emp, type)
                 this.emptyEmp()
                 this.getEmps()
             },
@@ -381,10 +321,10 @@
             deleteEmpByEmpno(row) {
                 let empno = row.empno
                 let url = `emp/${empno}`
-                let me =this
-                this.$confirm(`是否要删除${row.ename}`,'提示',{type:'warning'}).then(
-                    async function (){
-                        let result = await ajax(url,empno,'DELETE')
+                let me = this
+                this.$confirm(`是否要删除${row.ename}`, '提示', {type: 'warning'}).then(
+                    async function () {
+                        let result = await ajax(url, empno, 'DELETE')
                         me.getEmps();
                     }
                 )
@@ -406,62 +346,8 @@
             }
         },
     }
-    let dept = {
-        template:'#dept',
-        data:function (){
-            return {
-                depts:[],
-                dept: { // 新增(新增前需要清空emp),编辑(需要将当前行赋值给emp),查询(与查询条件双向绑定)共用
-                    deptno: undefined,
-                    dname: '',
-                    loc: ''
-                },
-                total: 0,
-                currentPage:1,
-                pageSize:3,
-                sortInfo:'deptno asc'
-            }
-        },
-        methods:{
-            // pageSize变动,触发重新从后台加载数据
-            handleSizeChange(pageSize) {
-                this.pageSize = pageSize
-                this.getDepts()
-            },
-            // currentPage变动,触发从后台加载数据
-            handleCurrentChange(currentPage) {
-                this.currentPage = currentPage
-                this.getDepts()
-            },
-            async getDepts() {
-                let url = 'getDeptsBypage'
-                let {dept,currentPage,pageSize,sortInfo} = this
-                // 组装分页与排序
-                dept.currentPage=currentPage
-                dept.pageSize=pageSize
-                dept.sortInfo=sortInfo
-                let deptPageInfo = await ajax(url,dept,'POST')
-                this.depts = deptPageInfo.list
-                this.total = deptPageInfo.total
-            },
-        },
-        mounted(){
-            this.getDepts()
-        }
-    }
-    let routes = [
-        //每个路由对应一个组件
-        {path: '/emp', component: emp},
-        {path: '/dept', component: dept}
-    ]
-    let router = new VueRouter({
-        routes
-    })
-    new Vue({
-        el: '#app',
-        router
-    })
-
 </script>
-</body>
-</html>
+
+<style>
+
+</style>
