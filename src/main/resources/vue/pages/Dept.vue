@@ -16,7 +16,6 @@
 <script>
 
     export default {
-        template: '#dept',
         data: function () {
             return {
                 depts: [],
